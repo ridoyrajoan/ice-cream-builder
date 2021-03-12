@@ -9,6 +9,7 @@ export default class IceCreamBuilder extends Component {
         items : {},
         scoops: [],
         totalPrice: 0,
+        loading: true,
     };
 
     componentDidMount() {
@@ -16,6 +17,7 @@ export default class IceCreamBuilder extends Component {
             response => response.json().then((responseData) => {
                 this.setState({
                     items: responseData,
+                    loading: false
                 })
             })
         )
@@ -51,6 +53,13 @@ export default class IceCreamBuilder extends Component {
 
     render() {
         const {items, totalPrice, scoops} = this.state;
+        if(this.state.loading) {
+            return (
+                <div className={[classes.container, "container"].join(' ')}>
+                    <p>Loading Data..</p>
+                </div>
+            )
+        }
         return (
             <div className={[classes.container, "container"].join(' ')}>
                 <IceCream scoops={scoops}/>
